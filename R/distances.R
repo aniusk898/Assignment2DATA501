@@ -8,12 +8,9 @@
 #' @export
 #'
 #' @examples
-#' data <- data.frame(
-#' y <- c(4.2, 5.1, 7.3, 6.5, 8.0, 6.7, 10),
-#' x1 <- c(2.1, 3.5, 5.1, 4.3, 6.0, 5.5, 7)
-#' )
-#' model <- lm(y ~ x1, data <- data)
+#' model <- lm(mpg ~ disp + hp + wt + qsec, data = mtcars)
 #' cooks_d <- cooks.distance(model)
+#' @importFrom stats resid hatvalues df.residual rstudent
 cooks_distance <- function(model) {
   if (!inherits(model, "lm")) {
     stop("the argument 'model' must be an object of class lm")
@@ -37,12 +34,9 @@ cooks_distance <- function(model) {
 #' @export
 #'
 #' @examples
-#' data <- data.frame(
-#' y <- c(4.2, 5.1, 7.3, 6.5, 8.0, 6.7, 10),
-#' x1 <- c(2.1, 3.5, 5.1, 4.3, 6.0, 5.5, 7)
-#' )
-#' model <- lm(y ~ x1, data <- data)
+#' model <- lm(mpg ~ disp + hp + wt + qsec, data = mtcars)
 #' dfits <- diffits(model)
+#' @importFrom stats resid hatvalues df.residual rstudent
 diffits <- function(model) {
   if (!inherits(model, "lm")) {
     stop("the argument 'model' must be an object of class lm")
@@ -64,12 +58,9 @@ diffits <- function(model) {
 #' @export
 #'
 #' @examples
-#' data <- data.frame(
-#' y <- c(4.2, 5.1, 7.3, 6.5, 8.0, 6.7, 10),
-#' x1 <- c(2.1, 3.5, 5.1, 4.3, 6.0, 5.5, 7)
-#' )
-#' model <- lm(y ~ x1, data <- data)
+#' model <- lm(mpg ~ disp + hp + wt + qsec, data = mtcars)
 #' hadis_influences <- hadis_influence(model)
+#' @importFrom stats resid hatvalues df.residual rstudent
 hadis_influence <- function (model) {
   if (!inherits(model, "lm")) {
     stop("the argument 'model' must be an object of class lm")
@@ -92,26 +83,20 @@ hadis_influence <- function (model) {
 #' @export
 #'
 #' @examples
-#' data <- data.frame(
-#' y <- c(4.2, 5.1, 7.3, 6.5, 8.0, 6.7, 10),
-#' x1 <- c(2.1, 3.5, 5.1, 4.3, 6.0, 5.5, 7)
-#' )
-#' model <- lm(y ~ x1, data <- data)
-#'
-#' valInputs(data, model)
+#' model <- lm(mpg ~ disp + hp + wt + qsec, data = mtcars)
+#' valInputs(mtcars, model)
 valInputs <- function(data, model) {
   if (!inherits(model, "lm")) {
-    stop("the argument 'model' must be an object of class lm")
+    stop("The argument 'model' must be an object of class lm")
   }
   if (!is.data.frame(data)) {
     stop("The data must be a data frame")
   }
-  if (any(is.na(data)) || any(is.infinite(data))) {
+  if (any(sapply(data, function(col)
+    any(is.na(col)) || any(is.infinite(col))))) {
     stop("The data contains NA or inf values")
   }
-  if (!is.numeric(data)) {
-    stop("The data format must be numeric")
-  }
+  return(TRUE)
 }
 
 

@@ -16,10 +16,6 @@ A numerical vector that contains the difference in fits of each observation in t
 This function calculates the difference in fits which is a metric used to identify influential data points by measuring how much the predicted value changes, in terms of standard deviations, when a specific observation is removed from the model.
 }
 \examples{
-data <- data.frame(
-y <- c(4.2, 5.1, 7.3, 6.5, 8.0, 6.7, 10),
-x1 <- c(2.1, 3.5, 5.1, 4.3, 6.0, 5.5, 7)
-)
-model <- lm(y ~ x1, data <- data)
+model <- lm(mpg ~ disp + hp + wt + qsec, data = mtcars)
 dfits <- diffits(model)
 }

@@ -16,10 +16,6 @@ A numerical vector that contains hadis_influence's influence measure of each obs
 This function calculates the hadis_influence's influence measure that considers that influential observations may occur in the response variable, the predictors, or in both.
 }
 \examples{
-data <- data.frame(
-y <- c(4.2, 5.1, 7.3, 6.5, 8.0, 6.7, 10),
-x1 <- c(2.1, 3.5, 5.1, 4.3, 6.0, 5.5, 7)
-)
-model <- lm(y ~ x1, data <- data)
+model <- lm(mpg ~ disp + hp + wt + qsec, data = mtcars)
 hadis_influences <- hadis_influence(model)
 }

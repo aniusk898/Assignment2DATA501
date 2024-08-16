@@ -22,12 +22,8 @@ A ggplot object displaying the influence measures with outliers highlighted. The
 This function plots various influence measures (Cook's Distance, DFFITS, Hadi's Influence Measure) for a given linear model.
 }
 \examples{
-#' data <- data.frame(
-y <- c(4.2, 5.1, 7.3, 6.5, 8.0, 6.7, 10),
-x1 <- c(2.1, 3.5, 5.1, 4.3, 6.0, 5.5, 7)
-)
-model <- lm(y ~ x1, data <- data)
-plot_infmeasures(model, mtcars, measure = "cooks_distance")
+model <- lm(mpg ~ disp + hp + wt + qsec, data = mtcars)
+plot_infmeasures(model, mtcars, measure = "cooks")
 plot_infmeasures(model, mtcars, measure = "diffits", threshold = 0.5)
-plot_infmeasures(model, mtcars, measure = "hadis_influence")
+plot_infmeasures(model, mtcars, measure = "hadis_influences")
 }
