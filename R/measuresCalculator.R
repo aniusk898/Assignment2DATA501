@@ -1,10 +1,10 @@
-#' Cook's Distance Measure Calculation
+#' Cooks Distance Measure Calculation
 #'
-#' This function calculates Cook's distance, which is a measure of influence used to assess the impact that an observation has on the estimates of a least squares regression model.
+#' This function calculates Cooks distance, which is a measure of influence used to assess the impact that an observation has on the estimates of a least squares regression model.
 #'
-#' @param model An object of class \code{lm} that is the linear model for which Cook's distance is going to be calculated.
+#' @param model An object of class \code{lm} that is the linear model for which Cooks distance is going to be calculated.
 #'
-#' @return A numerical vector that contains the Cook's distance of each observation in the model.
+#' @return A numerical vector that contains the Cooks distance of each observation in the model.
 #' @export
 #'
 #' @examples
@@ -48,13 +48,13 @@ diffits <- function(model) {
   return(diffits)
 }
 
-#' hadis_influence's Influence Measure Calculation
+#' Hadis Influence Measure Calculation
 #'
-#' This function calculates the hadis_influence's influence measure that considers that influential observations may occur in the response variable, the predictors, or in both.
+#' This function calculates the Hadis influence measure that considers that influential observations may occur in the response variable, the predictors, or in both.
 #'
 #' @inheritParams cooks_distance
 #'
-#' @return A numerical vector that contains hadis_influence's influence measure of each observation in the model.
+#' @return A numerical vector that contains Hadis influence measure of each observation in the model.
 #' @export
 #'
 #' @examples
@@ -87,19 +87,32 @@ hadis_influence <- function (model) {
 #' valInputs(mtcars, model)
 valInputs <- function(data, model) {
   if (!inherits(model, "lm")) {
-    stop("The argument 'model' must be an object of class lm")
+    stop("The argument 'model' must be an object of class 'lm'.")
   }
+
   if (!is.data.frame(data)) {
-    stop("The data must be a data frame")
+    stop("The data must be a data frame.")
   }
+
   if (any(sapply(data, function(col)
     any(is.na(col)) || any(is.infinite(col))))) {
-    stop("The data contains NA or inf values")
+    stop("The data contains NA or Inf values.")
   }
+
+  if (nrow(data) != nrow(model$model)) {
+    stop("The dimensions of the data do not match the number of observations in the model.")
+  }
+
+  if (any(duplicated(data))) {
+    stop("The data contains duplicated rows.")
+  }
+
+  if (any(sapply(data, is.character))) {
+    stop("The data contains character variables. Please convert them to factors or numeric.")
+  }
+
   return(TRUE)
 }
-
-
 
 
 

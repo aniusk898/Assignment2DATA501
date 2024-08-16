@@ -19,11 +19,11 @@ plot_infmeasures(model, data, measure = "cooks", threshold = NULL)
 A ggplot object displaying the influence measures with outliers highlighted. The plot includes vertical lines representing the influence values for each observation and a horizontal line indicating the threshold.
 }
 \description{
-This function plots various influence measures (Cook's Distance, DFFITS, Hadi's Influence Measure) for a given linear model.
+This function plots various influence measures (Cooks Distance, DFFITS, hadis_influenceInfluence Measure) for a given linear model.
 }
 \examples{
 model <- lm(mpg ~ disp + hp + wt + qsec, data = mtcars)
 plot_infmeasures(model, mtcars, measure = "cooks")
 plot_infmeasures(model, mtcars, measure = "diffits", threshold = 0.5)
-plot_infmeasures(model, mtcars, measure = "hadis_influences")
+plot_infmeasures(model, mtcars, measure = "hadis_influence")
 }
