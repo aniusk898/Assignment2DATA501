@@ -108,14 +108,21 @@ Before generating the plot, plot_infmeasures calls the "valInputs" function to e
 
 The plot_infmeasures function is designed to help you quickly identify influential data points through visualizations. The resulting plot shows each observation’s influence, with points exceeding the threshold highlighted, making it easier to spot potential outliers or influential cases.
 
-Here’s an example of how to use plot_infmeasures:
-```{r,fig.align='center'}
+Here are some examples of how to use plot_infmeasures:
+```{r,fig.align='center',fig.width=8, fig.height=6}
 plot_infmeasures(model_valid, data_valid, measure = "cooks", threshold = NULL)
 ```
 
 In this example, the function plots Cook’s distance for the model_valid, using the default threshold, which is displayed in the upper right corner of the plot. Observations that exceed this threshold (indicated by the horizontal red line) are identified as influential and are highlighted in red. These points may be considered outliers and warrant further investigation.
 
+```{r,fig.align='center',fig.width=8, fig.height=6}
+plot_infmeasures(model_valid, data_valid, measure = "hadis_influence")
+```
 
+```{r,fig.align='center',fig.width=8, fig.height=6}
+plot_infmeasures(model_valid, data_valid, measure = "diffits")
+```
+Here, observations 1, 6, and 7 are identified as influential and may significantly affect the model's outcomes.
 
 ## Examples of Errors in the arguments
 ```{r}
@@ -135,7 +142,15 @@ The output is "Error in `valInputs()`:
 The output will be is "Error in `valInputs()`:
 ! The data must be a data frame."
 
-```{r,fig.align='center'}
-plot_infmeasures(model_valid, data_valid, measure = "hadis_influence")
+```{r}
+# data_na <- data_valid
+# data_na[1, 1] <- NA
+# valInputs(data_na, model_valid)
 ```
-As in the previous measure, the observations highlited in red shows 
+The output is "Error in valInputs(data_na, model_valid) : 
+  The data contains NA or Inf values"
+  
+The "valInputs" function validates several types of errors to ensure correct inputs before analysis: it checks that the model is of class lm, the data is a valid data.frame, and there are no missing (NA) or infinite (Inf) values. It also confirms that the data dimensions match the model, identifies duplicated rows, and flags character variables that should be numeric or factors, etc.
+
+# GitHub repository
+The GitHub repository for this package is public and can be found at:[https://github.com/aniusk898/Assignment2DATA501](URL)
