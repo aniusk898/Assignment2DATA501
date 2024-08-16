@@ -60,16 +60,23 @@ diffits <- function(model) {
 #' @examples
 #' model <- lm(mpg ~ disp + hp + wt + qsec, data = mtcars)
 #' hadis_influences <- hadis_influence(model)
-#' @importFrom stats resid hatvalues df.residual rstudent
-hadis_influence <- function (model) {
+#' @importFrom stats resid hatvalues df.residual rstudent coef
+hadis_influence <- function(model) {
   if (!inherits(model, "lm")) {
-    stop("the argument 'model' must be an object of class lm")
+    stop("The argument 'model' must be an object of class 'lm'")
   }
 
-  res_stand <- rstudent(model)
   lev <- hatvalues(model)
-  hadis_influence <- (res_stand ^ 2 * lev) / (1 - lev) ^ 2
-  return(hadis_influence)
+  sse <- sum(resid(model) ^ 2)
+  di <- resid(model) / sqrt(sse)
+
+  di[di >= 1] <- 0.9999
+
+  p <- length(coef(model)) - 1
+
+  hadi_influence <- (lev / (1 - lev)) + ((p + 1) / (1 - lev)) * (di ^ 2 / (1 - di ^
+                                                                             2))
+  return(hadi_influence)
 }
 
 #' Validate Inputs and Outputs
@@ -113,9 +120,6 @@ valInputs <- function(data, model) {
 
   return(TRUE)
 }
-
-
-
 
 
 
